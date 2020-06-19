@@ -14,8 +14,9 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # datetime.strptime(request.data["date"], '%Y-%m-%d %H:%M:%S')
-        now = (datetime.now(timezone.utc)  + timedelta(seconds=3)).strftime('%Y-%m-%d %H:%M:%S')
-        # task_scheduler.add_job(job_scheduler,"interval", start_date=now, end_date=now)
+        # now = (datetime.now(timezone.utc)  + timedelta(seconds=3)).strftime('%Y-%m-%d %H:%M:%S')
+        dateTime = changeDateTimeToUTC(request.data["date"]).strftime('%Y-%m-%d %H:%M:%S')
+        task_scheduler.add_job(job_scheduler,"interval", start_date=now, end_date=now)
         return super(BookingViewSet, self).create(request, *args, **kwargs)
     
     def put(self, request, *args, **kwargs):
@@ -23,3 +24,7 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     def delete(self, request, *args, **kwargs):
         return super(BookingViewSet, self).delete(request, *args, **kwargs)
+
+    def changeDateTimeToUTC(datetime_string):
+        datetime_object = parse(datetime_string)
+        return dattime_object.astimezone(pytz.UTC)
