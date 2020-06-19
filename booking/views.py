@@ -13,13 +13,9 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
 
     def create(self, request, *args, **kwargs):
-        print("----------------------\n")
-        print(request.data["date"])
-        # print(datetime.strptime(request.data["date"], '%Y-%m-%d %H:%M:%S'))
-        print(datetime.fromisoformat(request.data["date"]))
-        # now = (datetime.now(timezone.utc)  + timedelta(seconds=3)).strftime('%Y-%m-%d %H:%M:%S')
+        # datetime.strptime(request.data["date"], '%Y-%m-%d %H:%M:%S')
+        now = (datetime.now(timezone.utc)  + timedelta(seconds=3)).strftime('%Y-%m-%d %H:%M:%S')
         # task_scheduler.add_job(job_scheduler,"interval", start_date=now, end_date=now)
-        # print("scheduling end")
         return super(BookingViewSet, self).create(request, *args, **kwargs)
     
     def put(self, request, *args, **kwargs):
@@ -27,6 +23,3 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     def delete(self, request, *args, **kwargs):
         return super(BookingViewSet, self).delete(request, *args, **kwargs)
-
-    # def getUpdatedHour(hour): 
-    #     if "PM" in hour:
